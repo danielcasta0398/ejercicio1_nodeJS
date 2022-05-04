@@ -1,5 +1,4 @@
 const express = require("express");
-const { route, use } = require("express/lib/router");
 const {
   getAllUsers,
   createUsers,
