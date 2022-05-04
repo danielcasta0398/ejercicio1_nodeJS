@@ -7,11 +7,12 @@ const {
   deleteUser,
 } = require("../controllers/userController");
 const { userExists } = require("../middlewares/usersMiddlewares");
+const { validationDateResult, checkValidation } = require("../middlewares/validationMiddleware");
 const router = express.Router();
 
 router.get("/", getAllUsers);
 
-router.post("/", createUsers);
+router.post("/", validationDateResult, checkValidation, createUsers);
 
 /*router.get('/:id', getUserById)
 
