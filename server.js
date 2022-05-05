@@ -1,4 +1,6 @@
 const { app } = require('./app');
+const { Repair } = require('./models/repairsModel');
+const { User } = require('./models/userModel');
 const { db } = require('./utils/database');
 
 //Conection to databases
@@ -6,6 +8,11 @@ const { db } = require('./utils/database');
 db.authenticate()
   .then(() => console.log('Successful connection to Databases'))
   .catch(err => console.log(err));
+
+// Establish models relations
+
+User.hasMany(Repair);
+Repair.belongsTo(User);
 
 db.sync( )
   .then(() => console.log('Database synced'))

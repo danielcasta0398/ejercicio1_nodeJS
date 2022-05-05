@@ -1,9 +1,12 @@
+const { Repair } = require('../models/repairsModel');
 const { User } = require('../models/userModel');
 
 const getAllUsers = async (req, res) => {
   try {
 
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: [{ model: Repair }]
+    });
     res.status(200).json({
       users,
     });

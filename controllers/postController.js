@@ -1,9 +1,12 @@
-const { Repair } = require('../models/repairsModel')
+const { Repair } = require('../models/repairsModel');
+const { User } = require('../models/userModel');
 
 
 const getRepairs = async ( req, res ) =>{
     try {
-        const repairs = await Repair.findAll();
+        const repairs = await Repair.findAll({
+            include: [ {model : User} ]
+        });
         res.status(200).json({repairs})
     } catch (error) {
         console.log(error);
