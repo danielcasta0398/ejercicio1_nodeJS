@@ -1,56 +1,46 @@
 const { Repair } = require('../models/repairsModel');
 const { User } = require('../models/userModel');
+const { catchAsync } = require('../utils/cathAsync');
 
-const getRepairs = async (req, res) => {
-  try {
-    const repairs = await Repair.findAll({
-      include: [{ model: User }],
-    });
-    res.status(200).json({ repairs });
-  } catch (error) {
-    console.log(error);
-  }
-};
+const getRepairs = catchAsync(async (req, res, next) => {
+  const repairs = await Repair.findAll({
+    include: [{ model: User }],
+  });
+  res.status(200).json({ repairs });
+});
 
-const getRepairsById = async (req, res) => {
-  try {
-    const { repairs } = req;
+const getRepairsById = catchAsync(async (req, res, next) => {
+  const { repairs } = req;
 
-    res.status(200).json({ repairs });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  res.status(200).json({ repairs });
+});
 
-const createRepair = async (req, res) => {
-  try {
-    const { userId } = req.body;
-    const newRepair = await Repair.create({
-      userId,
-    });
+const createRepair = catchAsync(async (req, res, next) => {
+  const { userId, date, computerNumber, comments } = req.body;
+  const newRepair = await Repair.create({
+    userId,
+    date,
+    computerNumber,
+    comments,
+  });
 
-    res.status(200).json({ newRepair });
-  } catch (error) {
-    console.log(error);
-  }
-};
+  res.status(200).json({ newRepair });
+});
 
-const updateRepairs = async (req, res) => {
-  try {
-    const { repairs } = req;
+const updateRepairs = catchAsync(async (req, res, next) => {
+  const { repairs } = req;
 
-    await repairs.update({ status: 'completed' });
-    res.status(200).json({ status: 'success' });
-  } catch (error) {}
-};
+  await repairs.update({ status: 'completed' });
+  res.status(200).json({ status: 'success' });
+});
 
-const deleteRepairs = async (req, res) => {
+const deleteRepairs = catchAsync(async (req, res, next) => {
   const { repairs } = req;
 
   await repairs.update({ status: 'cancelled' });
 
   res.status(200).json({ status: 'success' });
-};
+});
 
 module.exports = {
   createRepair,
