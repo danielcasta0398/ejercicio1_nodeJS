@@ -3,9 +3,8 @@ const { User } = require('../models/userModel');
 
 const getAllUsers = async (req, res) => {
   try {
-
     const users = await User.findAll({
-      include: [{ model: Repair }]
+      include: [{ model: Repair }],
     });
     res.status(200).json({
       users,
@@ -17,7 +16,7 @@ const getAllUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const { user } = req;   
+    const { user } = req;
 
     res.status(200).json({ user });
   } catch (error) {
@@ -45,11 +44,10 @@ const createUsers = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    
     const { user } = req;
-    const { name } = req.body;
-        
-    await user.update({ name });
+    const { name, email } = req.body;
+
+    await user.update({ name, email });
 
     res.status(200).json({ status: 'success' });
   } catch (error) {
@@ -63,7 +61,6 @@ const deleteUser = async (req, res) => {
 
     const user = await User.findOne({ where: { id } });
 
-   
     await user.update({ status: 'disabled' });
 
     res.status(200).json({
