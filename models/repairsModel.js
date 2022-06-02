@@ -29,6 +29,12 @@ const Repair = db.define('repair', {
     allowNull: false,
     defaultValue: 'pending',
   },
+
+  imgPath: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,

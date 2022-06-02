@@ -18,10 +18,12 @@ const validationDateResult = [
 const validationRepairs = [
   body('date')
     .notEmpty()
-    .withMessage('Name cannot be empty')
+    .withMessage('Date cannot be empty')
     .isDate()
     .withMessage('Date is incorrect or this empty'),
-  body('computerNumber').notEmpty().withMessage('Email cannot be empty'),
+  body('computerNumber')
+    .notEmpty()
+    .withMessage('Computer number cannot be empty'),
   body('comments').notEmpty().withMessage('comments cannot be empty'),
 ];
 

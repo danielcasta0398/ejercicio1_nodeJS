@@ -11,10 +11,18 @@ const {
   validationRepairs,
   checkValidation,
 } = require('../middlewares/validationMiddleware');
+const { upload } = require('../utils/multer');
+
 const router = express.Router();
 
 router.get('/', getRepairs);
-router.post('/', validationRepairs, checkValidation, createRepair);
+router.post(
+  '/',
+  upload.single('imgPath'),
+  validationRepairs,
+  checkValidation,
+  createRepair
+);
 router
   .route('/:id')
   .get(repairExists, getRepairsById)
